@@ -48,13 +48,7 @@ void display(){
         
 }
 
-void begining(){
-    new_node=(struct node *)malloc(sizeof(struct node));
-    printf("Enter the value :");
-    scanf("%d",&new_node->data);
-    new_node->next=head;
-    head=new_node;
-}
+
 
 void delete_val(){
     int num,found=0;
@@ -89,22 +83,29 @@ void insert_pos(){
     int pos;
     printf("Enter the position to insert :");
     scanf("%d",&pos);
-    temp=head;
-    for (int i=1;i<pos-1;i++){
-        temp=temp->next;
-    }
     new_node=(struct node *)malloc(sizeof(struct node));
     printf("Enter the value :");
     scanf("%d",&new_node->data);
-    new_node->next=temp->next;
-    temp->next=new_node;
+    if(pos==1){
+        new_node->next=head;
+        head=new_node;
+    }
+    else{
+        temp=head;
+        for (int i=1;i<pos-1;i++){
+            temp=temp->next;
+        }
+        new_node->next=temp->next;
+        temp->next=new_node;
+    }
+    
 }
 
 void main(){
     int choice;
     do
     {
-        printf("\n1.insert elements\n2.display\n3.insert at begining\n4.Delete any element\n5.insert at any position\nelse any key to exit");
+        printf("\n1.insert elements\n2.display\n3.\n4.Delete any element\n5.insert at any position\nzero to exit");
         printf("\nEnter your choice :");
         scanf("%d",&choice);
     
@@ -114,7 +115,7 @@ void main(){
                 break;
             case 2:display();
                 break;
-            case 3:begining();
+            case 3:
                 break;
             case 4:delete_val();
                 break;
