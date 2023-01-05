@@ -48,7 +48,15 @@ void display(){
         
 }
 
-
+void middle(){
+    struct node *slow=head;
+    struct node *fast=head;
+    while(fast!=NULL && fast->next!=NULL){
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    printf("middle element is :%d", slow->data);
+}
 
 void delete_val(){
     int num,found=0;
@@ -105,7 +113,7 @@ void main(){
     int choice;
     do
     {
-        printf("\n1.insert elements\n2.display\n3.\n4.Delete any element\n5.insert at any position\nzero to exit");
+        printf("\n1.insert elements\n2.display\n3.middle element\n4.Delete any element\n5.insert at any position\nzero to exit");
         printf("\nEnter your choice :");
         scanf("%d",&choice);
     
@@ -115,7 +123,7 @@ void main(){
                 break;
             case 2:display();
                 break;
-            case 3:
+            case 3: middle ();
                 break;
             case 4:delete_val();
                 break;
