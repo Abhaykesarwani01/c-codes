@@ -1,0 +1,988 @@
+1. wap in java to take input from userby using all of the following methods
+Command-line arguments:
+
+public class InputExample {  
+    public static void main(String[] args) {  
+        if (args.length > 0) {  
+            String input = args[0];  
+            System.out.println("You entered: " + input);  
+        } else {  
+            System.out.println("No input provided.");  
+        }  
+    }  
+}  
+
+
+Using the Java DataInputStream class
+
+import java.io.DataInputStream;  
+import java.io.IOException;  
+import java.io.InputStream;  
+public class InputExample {  
+    public static void main(String[] args) throws IOException {  
+        InputStream inputStream = System.in;  
+        DataInputStream dataInputStream = new DataInputStream(inputStream);  
+        System.out.print("Enter an integer: ");  
+        int num = dataInputStream.readInt();  
+        System.out.println("You entered: " + num);  
+    }  
+}  
+
+
+Using Java BufferedReader class:
+
+import java.io.BufferedReader;  
+import java.io.IOException;  
+import java.io.InputStreamReader;  
+public class InputExample {  
+    public static void main(String[] args) throws IOException {  
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));  
+        System.out.print("Enter a line of text: ");  
+        String input = reader.readLine();  
+        System.out.println("You entered: " + input);  
+    }  
+}  
+
+
+Using Java Scanner class:
+
+import java.util.Scanner;  
+public class InputExample {  
+    public static void main(String[] args) {  
+        Scanner scanner = new Scanner(System.in);  
+        System.out.print("Enter an integer: ");  
+        int num = scanner.nextInt();  
+        System.out.println("You entered: " + num);  
+    }  
+}  
+
+
+
+
+
+
+
+2.wap in java which create a varibale size of array and print all the values using loop
+
+public class JaggedArrayExample {  
+    public static void main(String[] args) {  
+          
+        // create a jagged array with three rows  
+        int[][] jaggedArray = {  
+            {1, 2, 3},   // first row has three columns  
+            {4, 5},      // second row has two columns  
+            {6, 7, 8, 9} // third row has four columns  
+        };  
+          
+        // loop through each row of the jagged array  
+        for (int i = 0; i < jaggedArray.length; i++) {  
+              
+            // loop through each column of the current row  
+            for (int j = 0; j < jaggedArray[i].length; j++) {  
+                  
+                // print the value at the current position in the array  
+                System.out.print(jaggedArray[i][j] + " ");  
+            }  
+              
+            // move to the next line for the next row  
+            System.out.println();  
+        }  
+    }
+}  
+
+
+
+
+
+
+3.WAP in java to implement the following types of inheritance
+
+Single Inheritance
+class Employee  
+{    
+float salary=34534*12;    
+}    
+public class Executive extends Employee  
+{   
+float bonus=3000*6;  
+public static void main(String args[])  
+{  
+Executive obj=new Executive();   
+System.out.println("Total salary credited: "+obj.salary);    
+System.out.println("Bonus of six months: "+obj.bonus);   
+}    
+}   
+
+
+Multi-level Inheritance
+
+//super class  
+class Student  
+{  
+int reg_no;  
+void getNo(int no)  
+{  
+reg_no=no;  
+}  
+void putNo()  
+{  
+System.out.println("registration number= "+reg_no);  
+}  
+}  
+//intermediate sub class  
+class Marks extends Student  
+{  
+float marks;  
+void getMarks(float m)  
+{  
+marks=m;  
+}  
+void putMarks()  
+{  
+System.out.println("marks= "+marks);  
+}  
+}  
+//derived class  
+class Sports extends Marks  
+{  
+float score;  
+void getScore(float scr)  
+{  
+score=scr;  
+}  
+void putScore()  
+{  
+System.out.println("score= "+score);  
+}  
+}  
+public class MultilevelInheritanceExample   
+{  
+public static void main(String args[])  
+{  
+Sports ob=new Sports();  
+ob.getNo(0987);  
+ob.putNo();  
+ob.getMarks(78);  
+ob.putMarks();  
+ob.getScore(68.7);  
+ob.putScore();  
+}  
+}  
+
+Hierarchical Inheritance
+
+//parent class  
+class Student  
+{  
+public void methodStudent()  
+{  
+System.out.println("The method of the class Student invoked.");  
+}  
+}  
+class Science extends Student  
+{  
+public void methodScience()  
+{  
+System.out.println("The method of the class Science invoked.");  
+}  
+}  
+class Commerce extends Student  
+{  
+public void methodCommerce()  
+{  
+System.out.println("The method of the class Commerce invoked.");  
+}  
+}  
+class Arts extends Student  
+{  
+public void methodArts()  
+{  
+System.out.println("The method of the class Arts invoked.");  
+}  
+}  
+public class HierarchicalInheritanceExample  
+{  
+public static void main(String args[])  
+{  
+Science sci = new Science();  
+Commerce comm = new Commerce();  
+Arts art = new Arts();  
+//all the sub classes can access the method of super class  
+sci.methodStudent();  
+comm.methodStudent();  
+art.methodStudent();  
+}  
+}   
+
+
+Hybrid Inheritance
+
+//parent class  
+class GrandFather  
+{  
+public void show()  
+{  
+System.out.println("I am grandfather.");  
+}  
+}  
+//inherits GrandFather properties  
+class Father extends GrandFather  
+{  
+public void show()  
+{  
+System.out.println("I am father.");  
+}  
+}  
+//inherits Father properties  
+class Son extends Father  
+{  
+public void show()  
+{  
+System.out.println("I am son.");  
+}  
+}  
+//inherits Father properties  
+public class Daughter extends Father  
+{  
+public void show()  
+{  
+System.out.println("I am a daughter.");  
+}  
+public static void main(String args[])  
+{  
+Daughter obj = new Daughter();  
+obj.show();  
+}  
+}  
+
+
+
+
+
+
+
+4.Create a package named “Mathematics” and add a class
+“Matrix” with methods to add and subtract matrices (2x2).
+Write a Java program importing the Mathematics package and
+use the classes defined in it.
+
+// Mathematics/Matrix.java
+package Mathematics;
+
+public class Matrix {
+    private int[][] matrix;
+
+    public Matrix(int[][] matrix) {
+        this.matrix = matrix;
+    }
+
+    public int[][] add(Matrix other) {
+        int[][] result = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                result[i][j] = this.matrix[i][j] + other.matrix[i][j];
+            }
+        }
+        return result;
+    }
+
+    public int[][] subtract(Matrix other) {
+        int[][] result = new int[2][2];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                result[i][j] = this.matrix[i][j] - other.matrix[i][j];
+            }
+        }
+        return result;
+    }
+}
+
+// Main.java
+import Mathematics.Matrix;
+
+public class Main {
+    public static void main(String[] args) {
+        int[][] matrix1 = {{1, 2}, {3, 4}};
+        int[][] matrix2 = {{5, 6}, {7, 8}};
+
+        Matrix mat1 = new Matrix(matrix1);
+        Matrix mat2 = new Matrix(matrix2);
+
+        int[][] sum = mat1.add(mat2);
+        int[][] difference = mat1.subtract(mat2);
+
+        System.out.println("Matrix 1:");
+        printMatrix(matrix1);
+        System.out.println("Matrix 2:");
+        printMatrix(matrix2);
+        System.out.println("Sum:");
+        printMatrix(sum);
+        System.out.println("Difference:");
+        printMatrix(difference);
+    }
+
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}
+
+
+
+
+
+
+5. WAP in java to implement constructor chaining and
+constructor overloading.
+
+// Java program to illustrate Constructor Chaining
+// within same class Using this() keyword
+class Temp
+{
+	// default constructor 1
+	// default constructor will call another constructor
+	// using this keyword from same class
+	Temp()
+	{
+		// calls constructor 2
+		this(5);
+		System.out.println("The Default constructor");
+	}
+
+	// parameterized constructor 2
+	Temp(int x)
+	{
+		// calls constructor 3
+		this(5, 15);
+		System.out.println(x);
+	}
+
+	// parameterized constructor 3
+	Temp(int x, int y)
+	{
+		System.out.println(x * y);
+	}
+
+	public static void main(String args[])
+	{
+		// invokes default constructor first
+		new Temp();
+	}
+}
+
+
+// Java program to illustrate
+// Constructor Overloading
+class Box {
+	double width, height, depth;
+
+	// constructor used when all dimensions
+	// specified
+	Box(double w, double h, double d)
+	{
+		width = w;
+		height = h;
+		depth = d;
+	}
+
+	// constructor used when no dimensions
+	// specified
+	Box() { width = height = depth = 0; }
+
+	// constructor used when cube is created
+	Box(double len) { width = height = depth = len; }
+
+	// compute and return volume
+	double volume() { return width * height * depth; }
+}
+
+// Driver code
+public class Test {
+	public static void main(String args[])
+	{
+		// create boxes using the various
+		// constructors
+		Box mybox1 = new Box(10, 20, 15);
+		Box mybox2 = new Box();
+		Box mycube = new Box(7);
+
+		double vol;
+
+		// get volume of first box
+		vol = mybox1.volume();
+		System.out.println("Volume of mybox1 is " + vol);
+
+		// get volume of second box
+		vol = mybox2.volume();
+		System.out.println("Volume of mybox2 is " + vol);
+
+		// get volume of cube
+		vol = mycube.volume();
+		System.out.println("Volume of mycube is " + vol);
+	}
+}
+
+
+
+
+
+
+
+6."Java does not support multiple inheritance but we can
+achieve it by interface”. Write a program to justify the above
+statement.
+
+// Java Program to Illustrate Unsupportance of
+// Multiple Inheritance
+
+// Importing input output classes
+import java.io.*;
+
+// Class 1
+// First Parent class
+class Parent1 {
+
+// Method inside first parent class
+void fun() {
+
+	// Print statement if this method is called
+	System.out.println("Parent1");
+}
+}
+
+// Class 2
+// Second Parent Class
+class Parent2 {
+
+// Method inside first parent class
+void fun() {
+
+	// Print statement if this method is called
+	System.out.println("Parent2");
+}
+}
+
+// Class 3
+// Trying to be child of both the classes
+class Test extends Parent1, Parent2 {
+
+// Main driver method 
+public static void main(String args[]) {
+
+	// Creating object of class in main() method
+	Test t = new Test();
+
+	// Trying to call above functions of class where
+	// Error is thrown as this class is inheriting
+	// multiple classes
+	t.fun();
+}
+}
+
+
+
+
+7.WAP in java to demonstrate that finally block is always
+executed whether exception occurred or not.
+
+class TestFinallyBlock {    
+  public static void main(String args[]){    
+  try{    
+//below code do not throw any exception  
+   int data=25/5;    
+   System.out.println(data);    
+  }    
+//catch won't be executed  
+  catch(NullPointerException e){  
+System.out.println(e);  
+}    
+//executed regardless of exception occurred or not  
+ finally {  
+System.out.println("finally block is always executed");  
+}    
+    
+System.out.println("rest of phe code...");    
+  }    
+}   
+
+
+
+
+
+
+8. WAP in java which creates two threads, “Even” thread and
+“Odd” thread and print the even no using Even Thread and
+odd no using Odd Thread.
+
+public class EvenOddThreads {
+    public static void main(String[] args) {
+        // Creating instances of the two threads
+        Thread evenThread = new EvenThread();
+        Thread oddThread = new OddThread();
+
+        // Starting both threads
+        evenThread.start();
+        oddThread.start();
+    }
+}
+
+// Thread for printing even numbers
+class EvenThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 2; i <= 10; i += 2) {
+            System.out.println("Even Thread: " + i);
+            try {
+                Thread.sleep(1000); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+// Thread for printing odd numbers
+class OddThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 10; i += 2) {
+            System.out.println("Odd Thread: " + i);
+            try {
+                Thread.sleep(1000); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+9. WAP in java which takes a name of a person as an input from
+the user implement the followings:
+ Find the length of the string.
+ Create the abbreviation of the name.
+ Swap the case of all input characters.
+
+import java.util.Scanner;
+
+public class NameOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Taking input from the user
+        System.out.print("Enter a name: ");
+        String name = scanner.nextLine();
+
+        // Finding the length of the string
+        int length = name.length();
+        System.out.println("Length of the name: " + length);
+
+        // Creating the abbreviation of the name (initials)
+        String[] parts = name.split("\\s+");
+        StringBuilder abbreviation = new StringBuilder();
+        for (String part : parts) {
+            abbreviation.append(part.charAt(0));
+        }
+        System.out.println("Abbreviation of the name: " + abbreviation.toString().toUpperCase());
+
+        // Swapping the case of all input characters
+        StringBuilder swappedCaseName = new StringBuilder();
+        for (char c : name.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                swappedCaseName.append(Character.toLowerCase(c));
+            } else if (Character.isLowerCase(c)) {
+                swappedCaseName.append(Character.toUpperCase(c));
+            } else {
+                swappedCaseName.append(c);
+            }
+        }
+        System.out.println("Name with swapped case: " + swappedCaseName.toString());
+
+        scanner.close();
+    }
+}
+
+
+
+
+
+
+
+14 Write programs using Java script for Web Page to display
+browsers information.
+
+<html>
+<head>
+<title>Browser Information</title>
+</head>
+<body>
+<h1>Browser Information</h1>
+<hr>
+<p>
+The<b>navigator</b>objectcontainsthefollowinginformation
+aboutthebrowseryouareusing.
+</p>
+<ul>
+<script LANGUAGE="JavaScript"
+type="text/javascript">document.write("<li><b>Code Name:</b> " +
+navigator.appCodeName); document.write("<li><b>App Name:</b> " +
+navigator.appName); document.write("<li><b>App Version:</b> " +
+navigator.appVersion);
+document.write("<li><b>UserAgent:</b>"+navigator.userAgent);
+document.write("<li><b>Language:</b> " + navigator.language);
+document.write("<li><b>Platform:</b> " + navigator.platform);
+</script>
+</ul>
+<hr>
+</body>
+</html>
+
+
+
+
+
+
+16 Writing program in XML for creation of DTD, which
+specifies set of rules. Create a style sheet in CSS/ XSL &
+display the document in internet explorer
+
+XML Document (example.xml):
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE example SYSTEM "example.dtd">
+<example>
+    <title>Welcome to Example XML</title>
+    <content>
+        <paragraph>This is a sample XML document.</paragraph>
+        <paragraph>It demonstrates how to use XML with DTD and CSS.</paragraph>
+        <paragraph>This is the third paragraph.</paragraph>
+    </content>
+</example>
+
+DTD (example.dtd):
+<!ELEMENT example (title, content)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT content (paragraph+)>
+<!ELEMENT paragraph (#PCDATA)>
+
+
+CSS Stylesheet (example.css):
+example {
+    font-family: Arial, sans-serif;
+}
+
+title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+paragraph {
+    margin-bottom: 20px;
+}
+
+
+XSL Stylesheet (example.xsl):
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="example.css" />
+  </head>
+  <body>
+    <xsl:apply-templates/>
+  </body>
+  </html>
+</xsl:template>
+
+<xsl:template match="title">
+  <h1><xsl:value-of select="."/></h1>
+</xsl:template>
+
+<xsl:template match="paragraph">
+  <p><xsl:value-of select="."/></p>
+</xsl:template>
+
+</xsl:stylesheet>
+
+
+
+
+
+
+
+17 Write a program to implement Math server using TCP socket
+and also write a client program to send user input to Math
+server and display response as the square of the given number
+
+import java.io.*;
+import java.net.*;
+
+public class MathServer {
+    public static void main(String[] args) {
+        final int PORT = 9999;
+
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            System.out.println("Server listening on port " + PORT);
+            
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
+
+                // Start a new thread to handle client
+                new Thread(new ClientHandler(clientSocket)).start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class ClientHandler implements Runnable {
+    private Socket clientSocket;
+
+    public ClientHandler(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run() {
+        try (BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true)) {
+
+            String inputLine;
+            while ((inputLine = input.readLine()) != null) {
+                try {
+                    double number = Double.parseDouble(inputLine);
+                    double square = Math.pow(number, 2);
+                    output.println(square);
+                } catch (NumberFormatException e) {
+                    output.println("Invalid input. Please send a number.");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+import java.io.*;
+import java.net.*;
+
+public class MathClient {
+    public static void main(String[] args) {
+        final String SERVER_HOST = "127.0.0.1";
+        final int SERVER_PORT = 9999;
+
+        try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
+             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+             BufferedReader serverInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter output = new PrintWriter(socket.getOutputStream(), true)) {
+
+            System.out.println("Connected to server");
+
+            String userInput;
+            while ((userInput = input.readLine()) != null) {
+                if (userInput.equalsIgnoreCase("exit")) {
+                    break;
+                }
+                output.println(userInput);
+                String serverResponse = serverInput.readLine();
+                System.out.println("Server response: " + serverResponse);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+18 Write a program to illustrate CURD operations using JDBC
+connectivity with MySQL database.
+
+import java.sql.*;
+
+public class CRUDExample {
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/example_db";
+
+    static final String USER = "username";
+    static final String PASS = "password";
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            // Register JDBC driver
+            Class.forName(JDBC_DRIVER);
+
+            // Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // Execute CRUD operations
+            createData(conn);
+            readData(conn);
+            updateData(conn);
+            deleteData(conn);
+
+        } catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            // Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        System.out.println("Goodbye!");
+    }
+
+    // CREATE operation
+    static void createData(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "INSERT INTO users (id, name, age) VALUES (1, 'John', 30)";
+        stmt.executeUpdate(sql);
+        System.out.println("Data created successfully");
+        stmt.close();
+    }
+
+    // READ operation
+    static void readData(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "SELECT id, name, age FROM users";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            int age = rs.getInt("age");
+
+            System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
+        }
+        rs.close();
+        stmt.close();
+    }
+
+    // UPDATE operation
+    static void updateData(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "UPDATE users SET age = 35 WHERE id = 1";
+        stmt.executeUpdate(sql);
+        System.out.println("Data updated successfully");
+        stmt.close();
+    }
+
+    // DELETE operation
+    static void deleteData(Connection conn) throws SQLException {
+        Statement stmt = conn.createStatement();
+        String sql = "DELETE FROM users WHERE id = 1";
+        stmt.executeUpdate(sql);
+        System.out.println("Data deleted successfully");
+        stmt.close();
+    }
+}
+
+
+
+
+
+
+
+
+19 Write a SQL query to create and call the stored procedures
+with following specifications:
+ Procedure without parameter and no return type
+ Procedure with parameter and no return type
+ Procedure with parameter and with return type
+
+
+Procedure without parameter and no return type:
+
+CREATE PROCEDURE ProcedureWithoutParameterNoReturnType()
+BEGIN
+    -- Procedure body without parameter and no return type
+    -- Example: Insert data into a table
+    INSERT INTO my_table (column1, column2) VALUES (value1, value2);
+END;
+
+
+To call this procedure:
+
+CALL ProcedureWithoutParameterNoReturnType();
+
+
+Procedure with parameter and no return type:
+
+CREATE PROCEDURE ProcedureWithParameterNoReturnType(IN param1 INT)
+BEGIN
+    -- Procedure body with parameter and no return type
+    -- Example: Delete data from a table based on parameter
+    DELETE FROM my_table WHERE column1 = param1;
+END;
+
+
+To call this procedure:
+
+CALL ProcedureWithParameterNoReturnType(123);
+
+
+Replace 123 with the actual parameter value.
+Procedure with parameter and with return type:
+
+CREATE PROCEDURE ProcedureWithParameterWithReturnType(IN param1 INT, OUT result VARCHAR(255))
+BEGIN
+    -- Procedure body with parameter and with return type
+    -- Example: Retrieve data from a table based on parameter
+    SELECT column2 INTO result FROM my_table WHERE column1 = param1;
+END;
+
+
+To call this procedure:
+
+CALL ProcedureWithParameterWithReturnType(456, @output);
+SELECT @output;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
