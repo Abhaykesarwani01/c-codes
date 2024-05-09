@@ -1,0 +1,525 @@
+#FIND-Salgorithm
+import pandas as pd
+data=pd.read_csv("trainingdata.csv")
+data
+def SAlgo():
+    h=['null','null','null','null','null','null']
+    li=['sky','airTemp','humidity','wind','water','forecast']
+    x=['Sunny','Warm','Normal','Strong','Warm','Same']
+    for i in range(0,4):
+            if(data['enjoySport'][i]=='Yes' and h[0]=='null'):
+                h=x
+                print("l1")
+            elif(data['enjoySport'][i]=='No'):
+                print("l2")
+                continue
+            else:
+                print("l3")
+                for j in range(0,6):
+                    if(data[li[j]][i]!=h[j]):
+                        h[i]='?'
+    return h
+print(SAlgo())
+
+
+
+
+
+
+
+
+
+#Candidate-Elimination algorithm
+import numpy as np
+import pandas as pd
+
+data=(pd.read_csv("trainingdata.csv"))
+print(data)
+
+concepts = np.array(data.iloc[:,0:-1])
+print(concepts)
+
+target = np.array(data.iloc[:,-1])
+print(target)
+	
+def learn(concepts, target):
+    specific_h = concepts[0].copy()
+    print("\nInitialization of specific_h and general_h")
+    print(specific_h)
+
+    general_h = [["?" for i in range(len(specific_h))] for i in range(len(specific_h))]
+    print(general_h)
+   
+    for i, h in enumerate(concepts):
+
+        
+        if target[i] == "Yes":
+            for x in range(len(specific_h)):
+
+              
+                if h[x] != specific_h[x]:
+                    specific_h[x] = '?'
+                    general_h[x][x] = '?'
+
+       
+        if target[i] == "No":
+            for x in range(len(specific_h)):
+                # For negative hyposthesis change values only  in G
+                if h[x] != specific_h[x]:
+                    general_h[x][x] = specific_h[x]
+                else:
+                    general_h[x][x] = '?'
+
+        print("\nSteps of Candidate Elimination Algorithm",i+1)
+        print(specific_h)
+        print(general_h)
+    
+  
+    indices = [i for i, val in enumerate(general_h) if val == ['?', '?', '?', '?', '?', '?']]
+    
+    for i in indices:    
+        general_h.remove(['?', '?', '?', '?', '?', '?'])
+   
+    return specific_h, general_h
+s_final, g_final = learn(concepts, target)
+print("\nFinal Specific_h:", s_final, sep="\n")
+print("\nFinal General_h:", g_final, sep="\n")
+
+
+
+
+
+
+
+#ID3 algorithm
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+import math
+
+df = pd.read_csv("diabetes.csv")
+df.head()
+
+def calculate_entropy(data, target_column):
+    total_rows = len(data)
+    target_values = data[target_column].unique()
+ 
+    entropy = 0
+    for value in target_values:
+        # Calculate the proportion of instances with the current value
+        value_count = len(data[data[target_column] == value])
+        proportion = value_count / total_rows
+        entropy -= proportion * math.log2(proportion)
+ 
+    return entropy
+ 
+entropy_outcome = calculate_entropy(df, 'Outcome')
+print(f"Entropy of the dataset: {entropy_outcome}")
+
+
+def calculate_entropy(data, target_column): # for each categorical variable
+    total_rows = len(data)
+    target_values = data[target_column].unique()
+ 
+    entropy = 0
+    for value in target_values:
+        value_count = len(data[data[target_column] == value])
+        proportion = value_count / total_rows
+        entropy -= proportion * math.log2(proportion) if proportion != 0 else 0
+ 
+    return entropy
+
+   
+def calculate_information_gain(data, feature, target_column):
+    unique_values = data[feature].unique()
+    weighted_entropy = 0
+ 
+    for value in unique_values:
+        subset = data[data[feature] == value]
+        proportion = len(subset) / len(data)
+        weighted_entropy += proportion * calculate_entropy(subset, target_column)
+ 
+    information_gain = entropy_outcome - weighted_entropy
+    return information_gain
+
+
+for column in df.columns[:-1]:
+    entropy = calculate_entropy(df, column)
+    information_gain = calculate_information_gain(df, column, 'Outcome')
+    print(f"{column} - Entropy: {entropy:.3f}, Information Gain: {information_gain:.3f}")
+
+
+# Feature selection for the first step in making decision tree
+selected_feature = 'DiabetesPedigreeFunction'
+ 
+# Create a decision tree
+clf = DecisionTreeClassifier(criterion='entropy', max_depth=1)
+X = df[[selected_feature]]
+y = df['Outcome']
+clf.fit(X, y)
+ 
+plt.figure(figsize=(8, 6))
+plot_tree(clf, feature_names=[selected_feature], class_names=['0', '1'], filled=True, rounded=True)
+plt.show()
+
+
+def id3(data, target_column, features):
+    if len(data[target_column].unique()) == 1:
+        return data[target_column].iloc[0]
+ 
+  
+    if len(features) == 0:
+        return data[target_column].mode().iloc[0]
+ 
+    best_feature = max(features, key=lambda x: calculate_information_gain(data, x, target_column))
+ 
+    tree = {best_feature: {}}
+ 
+    features = [f for f in features if f != best_feature]
+ 
+    for value in data[best_feature].unique():
+        subset = data[data[best_feature] == value]
+        tree[best_feature][value] = id3(subset, target_column, features)
+ 
+    return tree
+
+
+
+
+
+
+
+
+
+#Backpropagationalgorithm
+import numpy as np
+
+X = np.array(([2, 9], [1, 5], [3, 6]), dtype=float)
+y = np.array(([92], [86], [89]), dtype=float)
+X = X/np.amax(X,axis=0) # maximum of X array longitudinally 
+y = y/100
+
+def sigmoid (x):
+    return 1/(1 + np.exp(-x))
+def derivatives_sigmoid(x):
+    return x * (1 - x)
+
+epoch=7000  
+lr=0.1 
+inputlayer_neurons = 2  
+hiddenlayer_neurons = 3 
+output_neurons = 1
+
+wh=np.random.uniform(size=(inputlayer_neurons,hiddenlayer_neurons)) 
+bh=np.random.uniform(size=(1,hiddenlayer_neurons)) 
+wout=np.random.uniform(size=(hiddenlayer_neurons,output_neurons)) 
+bout=np.random.uniform(size=(1,output_neurons))
+
+for i in range(epoch):
+    hinp1=np.dot(X,wh) 
+    hinp=hinp1 + bh 
+    hlayer_act = sigmoid(hinp)
+    outinp1=np.dot(hlayer_act,wout) 
+    outinp= outinp1+ bout
+    output = sigmoid(outinp)
+
+EO = y-output
+outgrad = derivatives_sigmoid(output) 
+d_output = EO* outgrad
+EH = d_output.dot(wout.T)
+hiddengrad = derivatives_sigmoid(hlayer_act)  #how much hidden layer wts 
+d_hiddenlayer = EH * hiddengrad
+wout += hlayer_act.T.dot(d_output) *lr  # dotproduct of nextlayererror and 
+
+wh += X.T.dot(d_hiddenlayer) *lr
+print("Input: \n" + str(X))
+print("Actual Output: \n" + str(y)) 
+print("Predicted Output: \n" ,output)
+
+
+
+
+
+
+
+
+
+#naïve Bayesian classifier
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.naive_bayes import GaussianNB
+
+# load data from CSV
+data = pd.read_csv('tennisdata.csv')
+print("THe first 5 values of data is :\n",data.head())
+
+# obtain Train data and Train output
+X = data.iloc[:,:-1]
+print("\nThe First 5 values of train data is\n",X.head())
+
+y = data.iloc[:,-1]
+print("\nThe first 5 values of Train output is\n",y.head())
+
+
+# Convert then in numbers 
+le_outlook = LabelEncoder()
+X.Outlook = le_outlook.fit_transform(X.Outlook)
+
+le_Temperature = LabelEncoder()
+X.Temperature = le_Temperature.fit_transform(X.Temperature)
+
+le_Humidity = LabelEncoder()
+X.Humidity = le_Humidity.fit_transform(X.Humidity)
+
+le_Windy = LabelEncoder()
+X.Windy = le_Windy.fit_transform(X.Windy)
+
+print("\nNow the Train data is :\n",X.head())
+
+
+le_PlayTennis = LabelEncoder()
+y = le_PlayTennis.fit_transform(y)
+print("\nNow the Train output is\n",y)
+
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.20)
+
+classifier = GaussianNB()
+
+classifier.fit(X_train,y_train)
+pred=classifier.predict(X_test)
+
+from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score, confusion_matrix
+print("Accuracy is:",accuracy_score(classifier.predict(X_test),y_test))
+print("Precision is:",precision_score(classifier.predict(X_test),y_test))
+print("Recall is:",recall_score(classifier.predict(X_test),y_test))
+print("f1_score is:",f1_score(classifier.predict(X_test),y_test))
+print('Confusion Matrix: \n', confusion_matrix(y_test, pred))
+
+
+
+
+
+
+
+
+#naïve Bayesian Classifier model to perform this task. Built-in Java classes/API
+import pandas as pd
+msg = pd.read_csv('document.csv', names=['message', 'label'])
+print("Total Instances of Dataset: ", msg.shape[0])
+msg['labelnum'] = msg.label.map({'pos': 1, 'neg': 0})
+
+
+X = msg.message
+y = msg.labelnum
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
+from sklearn.feature_extraction.text import CountVectorizer
+
+count_v = CountVectorizer()
+Xtrain_dm = count_v.fit_transform(Xtrain)
+Xtest_dm = count_v.transform(Xtest)
+
+
+df = pd.DataFrame(Xtrain_dm.toarray(),columns=count_v.get_feature_names_out())
+print(df[0:5])
+
+
+
+
+
+
+
+
+
+#heart patients using standard Heart Disease Data Set
+import pandas as pd
+data=pd.read_csv("heartdisease.csv")
+heart_disease=pd.DataFrame(data)
+print(heart_disease)
+
+
+from pgmpy.models import BayesianModel
+model=BayesianModel([
+('age','Lifestyle'),
+('Gender','Lifestyle'),
+('Family','heartdisease'),
+('diet','cholestrol'),
+('Lifestyle','diet'),
+('cholestrol','heartdisease'),
+])
+
+
+from pgmpy.estimators import MaximumLikelihoodEstimator
+model.fit(heart_disease, estimator=MaximumLikelihoodEstimator)
+
+from pgmpy.inference import VariableElimination
+HeartDisease_infer = VariableElimination(model)
+
+
+print('For age Enter { SuperSeniorCitizen:0, SeniorCitizen:1, MiddleAged:2, Youth:3, Teen:4 }')
+print('For Gender Enter { Male:0, Female:1 }')
+print('For Family History Enter { yes:1, No:0 }')
+print('For diet Enter { High:0, Medium:1 }')
+print('For lifeStyle Enter { Athlete:0, Active:1, Moderate:2, Sedentary:3 }')
+print('For cholesterol Enter { High:0, BorderLine:1, Normal:2 }')
+
+q = HeartDisease_infer.query(variables=['heartdisease'], evidence={
+    'age':int(input('Enter age :')),
+    'Gender':int(input('Enter Gender :')),
+    'Family':int(input('Enter Family history :')),
+    'diet':int(input('Enter diet :')),
+    'Lifestyle':int(input('Enter Lifestyle :')),
+    'cholestrol':int(input('Enter cholestrol :'))
+    })
+
+
+print(q)
+probabilities = q.values
+# Print the probabilities
+for i, prob in enumerate(probabilities):
+    print(f'Probability of heart disease being {i}: {prob}')
+
+
+
+
+
+
+
+
+
+
+#EM algorithm
+from sklearn.cluster import KMeans
+from sklearn import preprocessing
+from sklearn.mixture import GaussianMixture
+from sklearn.datasets import load_iris
+import sklearn.metrics as sm
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+dataset=load_iris()
+# print(dataset)
+
+
+X=pd.DataFrame(dataset.data)
+X.columns=['Sepal_Length','Sepal_Width','Petal_Length','Petal_Width']
+y=pd.DataFrame(dataset.target)
+y.columns=['Targets']
+print(X)
+
+
+plt.figure(figsize=(14,7))
+colormap=np.array(['red','lime','black'])
+
+# REAL PLOT
+plt.subplot(1,3,1)
+plt.scatter(X.Petal_Length,X.Petal_Width,c=colormap[y.Targets],s=40)
+plt.title('Real')
+
+# K-PLOT
+plt.subplot(1,3,2)
+model=KMeans(n_clusters=3)
+model.fit(X)
+predY=np.choose(model.labels_,[0,1,2]).astype(np.int64)
+plt.scatter(X.Petal_Length,X.Petal_Width,c=colormap[predY],s=40)
+plt.title('KMeans')
+
+# GMM PLOT
+scaler=preprocessing.StandardScaler()
+scaler.fit(X)
+xsa=scaler.transform(X)
+xs=pd.DataFrame(xsa,columns=X.columns)
+gmm=GaussianMixture(n_components=3)
+gmm.fit(xs)
+y_cluster_gmm=gmm.predict(xs)
+plt.subplot(1,3,3)
+plt.scatter(X.Petal_Length,X.Petal_Width,c=colormap[y_cluster_gmm],s=40)
+plt.title('GMM Classification')
+
+
+
+
+
+
+
+
+
+
+#k-Nearest Neighbour algorithm
+from sklearn.datasets import load_iris
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+
+dataset=load_iris()
+#print(dataset)
+X_train,X_test,y_train,y_test=train_test_split(dataset["data"],dataset["target"],random_state=0)
+
+
+kn=KNeighborsClassifier(n_neighbors=3)
+kn.fit(X_train,y_train)
+
+
+prediction = kn.predict(X_test)
+for i in range(len(prediction)):
+    print(f"Target={y_test[i]} {dataset['target_names'][y_test[i]]} Predicted={prediction[i]} {dataset['target_names'][prediction[i]]}")
+
+
+
+
+
+
+
+
+
+#non-parametric Locally Weighted Regression algorithm
+from math import ceil
+import numpy as np
+from scipy import linalg
+
+
+def lowess(x, y, f, iterations):
+    n = len(x)
+    r = int(ceil(f * n))
+    h = [np.sort(np.abs(x - x[i]))[r] for i in range(n)]
+    w = np.clip(np.abs((x[:, None] - x[None, :]) / h), 0.0, 1.0)
+    w = (1 - w * 3) * 3
+    yest = np.zeros(n)
+    delta = np.ones(n)
+    for iteration in range(iterations):
+        for i in range(n):
+            weights = delta * w[:, i]
+            b = np.array([np.sum(weights * y), np.sum(weights * y * x)])
+            A = np.array([[np.sum(weights), np.sum(weights * x)],[np.sum(weights * x), np.sum(weights * x * x)]])
+            beta = linalg.solve(A, b)
+            yest[i] = beta[0] + beta[1] * x[i]
+
+        residuals = y - yest
+        s = np.median(np.abs(residuals))
+        delta = np.clip(residuals / (6.0 * s), -1, 1)
+        delta = (1 - delta * 2) * 2
+
+    return yest
+
+
+import math
+n = 100
+x = np.linspace(0, 2 * math.pi, n)
+y = np.sin(x) + 0.3 * np.random.randn(n)
+f =0.25
+iterations=3
+yest = lowess(x, y, f, iterations)
+    
+import matplotlib.pyplot as plt
+plt.plot(x,y,"r.")
+plt.plot(x,yest,"b-")
+
+
+
+
+
