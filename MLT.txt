@@ -17,7 +17,7 @@ def SAlgo():
                 print("l3")
                 for j in range(0,6):
                     if(data[li[j]][i]!=h[j]):
-                        h[i]='?'
+                        h[j]='?'
     return h
 print(SAlgo())
 
